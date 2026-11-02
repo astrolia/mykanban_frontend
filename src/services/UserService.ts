@@ -13,3 +13,15 @@ export async function postUser(userData: createUserType) {
     throw error
   }
 }
+
+
+export async function getUser() {
+  try{
+    const response = await api.get('/users')
+    
+    return response.data
+  }catch(error){
+    console.log("Erro ao procurar usuario", error)
+    throw error
+  }
+}
