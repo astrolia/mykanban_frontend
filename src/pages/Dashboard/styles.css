@@ -1,0 +1,209 @@
+:root {
+  --bg: #1d223e;            
+  --card: #788ba8;          
+  --card-dark: #5f7391;
+  --board: #ffffff;         
+  --text-dark: #1d223e;
+  --text-light: #f1f4f9;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-light);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.mainDiv {
+  min-height: 100vh;
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+
+.addTask {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 560px;
+  padding: 8px;
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.addTask input,
+.addTask select {
+  padding: 7px 10px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.addTask input {
+  flex: 1;
+  min-width: 0;
+}
+
+.addTask input:focus,
+.addTask select:focus {
+  border-color: var(--bg);
+}
+
+.btnAdd {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.15s;
+}
+
+.btnAdd:hover {
+  background: #2a3158;
+}
+
+.btnAdd:active {
+  transform: scale(0.97);
+}
+
+.board {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1400px;
+  flex: 1;
+}
+
+.column {
+  flex: 1;
+  min-width: 0;
+  min-height: calc(100vh - 110px);
+  padding: 20px;
+  background: var(--board);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e3e8f0;
+}
+
+.columnHeader h3 {
+  flex: 1;          
+  margin: 0;
+  text-align: left;   
+  font-size: 1.15rem;
+  color: var(--text-dark);
+}
+
+.badge {
+  margin-left: auto;  
+  flex-shrink: 0;
+  min-width: 28px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text-light);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty {
+  margin: 28px 0;
+  text-align: center;
+  color: var(--card-dark);
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--card);
+  color: var(--text-dark);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+  word-break: break-word;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.task:active {
+  cursor: grabbing;
+}
+
+.btnRemove {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-dark);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btnRemove:hover {
+  background: var(--bg);
+  color: var(--text-light);
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 760px) {
+  .board {
+    flex-direction: column;
+  }
+
+  .column {
+    min-height: 180px;
+  }
+
+  .addTask {
+    flex-wrap: wrap;
+  }
+
+  .addTask input {
+    flex-basis: 100%;
+  }
+}

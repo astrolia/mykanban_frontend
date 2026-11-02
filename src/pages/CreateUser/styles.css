@@ -1,0 +1,25 @@
+*{
+  margin: auto;
+}
+
+.mainDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1b263b;
+
+    & > form {
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    flex-direction: column;
+    background-color: #778da9;
+
+    border-radius: 20px;
+
+    padding: 30px;
+    gap: 5px;
+    }
+}
