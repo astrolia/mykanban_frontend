@@ -1,5 +1,6 @@
 import './styles.css'
 import { postUser } from '../../services/UserService'
+import { useNavigate } from 'react-router-dom'
 
 import { useState } from 'react'
 
@@ -9,6 +10,7 @@ function CreateUser() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
 
 
 async function sendUser(e: SubmitEvent) {
@@ -28,6 +30,7 @@ async function sendUser(e: SubmitEvent) {
       const newUser = { name, email, password }
 
       const result = await postUser(newUser)
+      navigate('/')
 
       console.log("Usuário cadastrado com sucesso!", result)
       alert("Cadastro realizado!")
@@ -39,6 +42,7 @@ async function sendUser(e: SubmitEvent) {
 
   return (<div className='mainDiv'>
       <form onSubmit={(e) => sendUser(e as unknown as SubmitEvent)}>
+        <h2>Informe seus dados</h2>
         <label>Nome:</label>
         <input type="text" name='name' value={name} onChange={(e) => setName(e.target.value)}/>
         <label>Email:</label>

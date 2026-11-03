@@ -1,0 +1,56 @@
+.homePage {
+  min-height: calc(100vh - 64px);
+  padding: 40px 28px;
+  background-color: #1b263b;
+}
+
+.homeTitle {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  color: #e0e1dd;
+  font-size: 1.6rem;
+}
+
+.homeEmpty {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #778da9;
+}
+
+.workspaceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.workspaceCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 150px;
+  padding: 22px;
+  background-color: #778da9;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  color: #0d1b2a;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.workspaceCard:hover {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+}
+
+.workspaceCard h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.workspaceCard p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}

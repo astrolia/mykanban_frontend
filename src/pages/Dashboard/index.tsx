@@ -1,6 +1,9 @@
 import './styles.css'
 
 import {useState} from 'react'
+import { useParams } from 'react-router-dom'
+
+
 
 
 type Task = { id: string; content: string }
@@ -14,6 +17,8 @@ function KanbanDefault() {
     inProgress: { name: "In Progress", items: [] },
     done: { name: "Done", items: [] },
   });
+
+  const { id } = useParams()  
 
 
 
