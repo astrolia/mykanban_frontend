@@ -18,3 +18,9 @@ export type ChangePasswordType = {
   currentPassword: string
   newPassword: string
 }
+
+
+export type userEnv = {
+    id: number
+    label: string
+}

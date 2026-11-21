@@ -1,0 +1,11 @@
+/*
+ * Cores disponíveis para prioridades. O valor guardado em PriorityEnv.css é o nome da classe.
+ * O seletor com .MuiChip-root garante que a cor vença o fundo padrão do Chip do MUI.
+ */
+.priority-red,    .MuiChip-root.priority-red    { background: #c62828; color: #fff; }
+.priority-orange, .MuiChip-root.priority-orange { background: #ef6c00; color: #fff; }
+.priority-yellow, .MuiChip-root.priority-yellow { background: #f9a825; color: #000; }
+.priority-green,  .MuiChip-root.priority-green  { background: #2e7d32; color: #fff; }
+.priority-blue,   .MuiChip-root.priority-blue   { background: #1565c0; color: #fff; }
+.priority-purple, .MuiChip-root.priority-purple { background: #6a1b9a; color: #fff; }
+.priority-grey,   .MuiChip-root.priority-grey   { background: #616161; color: #fff; }

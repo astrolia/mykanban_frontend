@@ -3,8 +3,9 @@ import type {
   UserResponseType,
   UpdateUserType,
   ChangePasswordType,
-} from '../types/user'
+} from '../types/UserType'
 import api from './api'
+import type { userEnv } from '../types/UserType';
 
 export async function postUser(userData: createUserType) {
   try {
@@ -35,3 +36,17 @@ export async function deleteMe(password: string) {
   await api.delete('/users/me', { data: { password } })
   localStorage.removeItem('token')
 }
+
+
+export async function findByEmail(email: string): Promise<userEnv> {
+
+    try{
+      const response = await api.get<userEnv>('/users/by-email', { params: { email } });
+      return response.data;
+
+    }catch(e){
+      throw new Error("Falha ao retornar ambiente");
+
+    }
+}
+
