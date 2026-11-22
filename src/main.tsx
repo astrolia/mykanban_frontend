@@ -73,6 +73,10 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<CreateUser />} />
 
+              {import.meta.env.DEV && (
+                <Route path="/preview/environment" element={<KanbanEnvironment />} />
+              )}
+
               <Route element={<PrivateRoute><Outlet /></PrivateRoute>}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/environment/:envId" element={<KanbanEnvironment />} />

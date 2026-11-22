@@ -48,7 +48,7 @@ const organizeEnv = (env: EnvironmentResponseType) => {
       description: env.description,
       owner: env.owner,
       priority: env.priority,
-      columns: env.columns,
+      columns:  env.columns.map((col) => ({ ...col, addCard: false })),
       cards: env.cards.filter((item) => !item.archived),
       users: env.users,
       archive: env.cards.filter((item) => item.archived)
@@ -97,6 +97,10 @@ function KanbanEnvironment() {
 
   const handleCreateColumn = async (label: string) => {
     try {
+      if(envObject.columns.find((item) => item.label === label)){
+        toast.error("Já existe uma coluna com este nome")
+        return
+      }
       const column: ColumnCreateType = { label: label }
       const newColumn = await ColumnCRUD.create(envObject.id, column)
       setEnvObject(prev => ({
@@ -369,18 +373,28 @@ function KanbanEnvironment() {
         </Box>
       </Paper>
 
-    <Box sx={{ flex: 1, p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', width: '100%' }}>
-      <WillowDark>
-        <Box sx={{ width: '1000px', height: '100%', display: 'flex', justifyContent: 'center' }}>
-          <Kanban 
-            init={setApi} 
-            cards={envObject.cards} 
-            columns={envObject.columns} 
-            cardContent={CardContent} 
-          />
-        </Box>
-      </WillowDark>
-    </Box>
+      <Box sx={{ flex: 1, p: 3, display: 'flex', justifyContent: 'center', overflow: 'hidden', width: '100%' }}>
+        <WillowDark>
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              '& .wx-column:first-of-type': { marginLeft: 'auto' },
+              '& .wx-column:last-of-type': { marginRight: 'auto' },
+            }}
+          >
+            <Kanban
+              init={(a) => {
+                a.intercept("add-card", () => false)
+                setApi(a)
+              }}
+              cards={envObject.cards}
+              columns={envObject.columns}
+              cardContent={CardContent}
+            />
+          </Box>
+        </WillowDark>
+      </Box>
 
       <EditCardForm
         open={editCardOpen} card={selectedCard}
