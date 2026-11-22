@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrashOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForeverOutlined';
+
 // ajuste o caminho conforme a pasta onde o componente ficar
 import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "/home/leviatan/Documents/Workspace/Projetos_Faculdade/kanban_front2/mykanban/src/types/environment"
 
@@ -192,6 +193,9 @@ function ArchiveDialog({
               columns={gridColumns}
               getRowHeight={() => 'auto'}
               disableRowSelectionOnClick
+              getRowClassName={(params) => {
+                return params.row.done ? 'row-done' : 'row-not-done';
+              }}
               pageSizeOptions={[5, 10, 25]}
               initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
               localeText={{

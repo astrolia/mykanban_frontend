@@ -1,7 +1,7 @@
 import api from "./api";
 import type { PriorityEnv } from "../types/PriorityType";
 
-export const ColumnService = {
+export const PriorityCRUD = {
   list: (envId: number) =>
     api.get<PriorityEnv[]>(`/environments/${envId}/priority`).then((r) => r.data),
 

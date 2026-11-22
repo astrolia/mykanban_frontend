@@ -23,7 +23,7 @@ export type ColumnEnv = {
 export type CardEnv = {
     id: number
     label: string
-    column: string | number
+    column: number
     description?: string
     priority?: number
     progress?: number

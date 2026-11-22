@@ -5,8 +5,9 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlineOutlined';
-// ajuste o caminho conforme a pasta onde o componente ficar
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "/home/leviatan/Documents/Workspace/Projetos_Faculdade/kanban_front2/mykanban/src/types/environment"
+// src/pages/Environment/components/ManagePriority/ -> src/types/
+import type { CardEnv } from '../../../../types/CardsType';
+import type { PriorityEnv } from '../../../../types/PriorityType';
 
 import './priorities.css';
 
@@ -103,7 +104,7 @@ function ManagePrioritiesDialog({
             <Stack
               key={p.id}
               direction="row"
-              sx={{ py: 0.75 }}
+              sx={{ py: 0.75, alignItems: 'center', justifyContent: 'space-between', gap: 1 }}
             >
               <Stack spacing={0.25}>
                 <Box>
@@ -175,7 +176,7 @@ function ManagePrioritiesDialog({
           />
 
           <Typography variant="caption" color="text.secondary">Cor</Typography>
-          <Stack direction="row" sx={{ mt: 0.5, mb: 1.5 }}>
+          <Stack direction="row" sx={{ mt: 0.5, mb: 1.5, gap: 1, flexWrap: 'wrap' }}>
             {PALETTE.map(c => (
               <Tooltip key={c.css} title={c.name}>
                 <Box
@@ -200,10 +201,10 @@ function ManagePrioritiesDialog({
             ))}
           </Stack>
 
-          <Stack direction="row" >
+          <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
             <Chip size="small" label={trimmed || 'Pré-visualização'} className={css} />
 
-            <Stack direction="row">
+            <Stack direction="row" sx={{ gap: 1 }}>
               {editing && <Button onClick={reset}>Cancelar edição</Button>}
               <Button type="submit" variant="contained" disabled={invalid}>
                 {editing ? 'Salvar' : 'Adicionar'}

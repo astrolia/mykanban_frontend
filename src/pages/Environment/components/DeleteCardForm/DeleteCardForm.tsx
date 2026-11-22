@@ -1,9 +1,11 @@
 
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Checkbox,
+  Typography
 } from '@mui/material';
 // ajuste o caminho conforme a pasta onde o componente ficar
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "/home/leviatan/Documents/Workspace/Projetos_Faculdade/kanban_front2/mykanban/src/types/environment"
+import type { CardEnv } from '../../../../types/CardsType'
+import { useState } from 'react';
 
 type Props = {
   open: boolean;
@@ -13,20 +15,30 @@ type Props = {
 };
  
 function DeleteCardForm({ open, card, onClose, onConfirm }: Props) {
+
+  const [done, setDone] = useState(false)
+
   const handleConfirm = () => {
     if (!card) return;
+
+    card.done = done
     onConfirm(card);
     onClose();
   };
  
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogTitle>Excluir card</DialogTitle>
+      <DialogTitle>Arquivar card</DialogTitle>
  
       <DialogContent>
         <DialogContentText>
-        O card <strong>{card?.label}</strong> será movido para os arquivados. De lá você pode restaurá-lo ou excluí-lo definitivamente.
+        O card <strong>{card?.label}</strong> será arquivado.
         </DialogContentText>
+        <Typography>Marcar como concluido:         <Checkbox
+        checked={done} 
+        onChange={(e) => setDone(e.target.checked)} 
+        color="primary" 
+      /></Typography>
       </DialogContent>
  
       <DialogActions>

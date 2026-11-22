@@ -1,61 +1,100 @@
-import {useState} from 'react';
-import {Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button} from '@mui/material';
+import { useState } from 'react';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField,
+} from '@mui/material';
+// src/pages/Environment/components/EditColumnForm/ -> src/types/
+import type { ColumnEnv } from '../../../../types/ColumnsType';
 
 type Props = {
-    open: boolean;
-    onClose: () => void;
-    onSubmit: (label: string, newlabel: string) => void
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (columnId: ColumnEnv['id'], newLabel: string) => void;
+  columns: ColumnEnv[];
+};
+
+function EditColumnForm({ open, onClose, onSubmit, columns }: Props) {
+  const [columnId, setColumnId] = useState<ColumnEnv['id'] | ''>('');
+  const [newLabel, setNewLabel] = useState('');
+
+  const selected = columns.find(c => c.id === columnId);
+  const trimmed = newLabel.trim();
+
+  const duplicated =
+    columnId !== '' &&
+    columns.some(c => c.id !== columnId && c.label.trim().toLowerCase() === trimmed.toLowerCase());
+  const unchanged = !!selected && selected.label === trimmed;
+  const invalid = columnId === '' || !trimmed || duplicated || unchanged;
+
+  const reset = () => {
+    setColumnId('');
+    setNewLabel('');
+  };
+
+  // ao escolher a coluna, o novo nome já vem preenchido com o nome atual
+  const handleSelect = (id: ColumnEnv['id']) => {
+    setColumnId(id);
+    setNewLabel(columns.find(c => c.id === id)?.label ?? '');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (columnId === '' || invalid) return;
+
+    onSubmit(columnId, trimmed);
+    onClose();
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="xs"
+      slotProps={{ transition: { onExited: reset } }} // limpa ao fechar (confirmar ou cancelar)
+    >
+      <form onSubmit={handleSubmit}>
+        <DialogTitle>Editar Coluna</DialogTitle>
+
+        <DialogContent>
+          <TextField
+            select
+            required
+            autoFocus
+            label="Coluna"
+            value={columnId}
+            onChange={e => handleSelect(Number(e.target.value))}
+            disabled={columns.length === 0}
+            helperText={columns.length === 0 ? 'Não há colunas para editar' : undefined}
+            fullWidth
+            margin="dense"
+          >
+            {columns.map(col => (
+              <MenuItem key={col.id} value={col.id}>{col.label}</MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            required
+            label="Novo nome"
+            value={newLabel}
+            onChange={e => setNewLabel(e.target.value)}
+            disabled={columnId === ''}
+            error={duplicated}
+            helperText={duplicated ? 'Já existe uma coluna com esse nome' : ' '}
+            fullWidth
+            margin="dense"
+          />
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={onClose}>Cancelar</Button>
+          <Button type="submit" variant="contained" disabled={invalid}>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
+  );
 }
 
-
-function DeleteColumnForm({open, onClose, onSubmit}: Props){
-
-    const [label, setLabel] = useState('')
-    const [newLabel, setNewLabel] = useState('')
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!label.trim() || !newLabel.trim())
-            return;
-        
-        onSubmit(label.trim(), newLabel.trim());
-        setLabel('');
-        setNewLabel('');
-        onClose();
-    }
-
-    return(
-        <Dialog open={open} onClose={onClose}>
-            <form onSubmit={handleSubmit}>
-                <DialogTitle>Editar Coluna</DialogTitle>
-
-                <DialogContent>
-                    <TextField
-                        autoFocus
-                        label="Nome da Coluna"
-                        value={label}
-                        onChange={e => setLabel(e.target.value)}
-                        fullWidth
-                        margin="dense"
-                    />
-
-                    <TextField
-                        autoFocus
-                        label="Novo Nome"
-                        value={newLabel}
-                        onChange={e => setNewLabel(e.target.value)}
-                        fullWidth
-                        margin="dense"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose}>Cancelar</Button>
-                    <Button type='submit' variant='contained'>Confirmar</Button>
-                </DialogActions>
-            </form>
-        </Dialog>
-        
-    )
-}
-
-export default DeleteColumnForm;
+export default EditColumnForm;

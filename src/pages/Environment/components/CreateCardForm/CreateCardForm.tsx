@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import {
-  Slider, Typography, Dialog, DialogTitle, DialogContent, DialogActions,
-  TextField, Button, MenuItem,
+  Button, Dialog, DialogActions, DialogContent, DialogTitle,
+  MenuItem, Slider, TextField, Typography,
 } from '@mui/material';
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "/home/leviatan/Documents/Workspace/Projetos_Faculdade/kanban_front2/mykanban/src/types/environment"
-
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ptBR } from 'date-fns/locale';
+import { startOfDay } from 'date-fns';
+// src/pages/Environment/components/CreateCardForm/ -> src/types/
+import type { CardEnv } from '../../../../types/CardsType';
+import type { ColumnEnv } from '../../../../types/ColumnsType';
+import type { PriorityEnv } from '../../../../types/PriorityType';
+import type { userEnv } from '../../../../types/UserType';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSubmit: (card: CardEnv) => void;
+  onSubmit: (card: Omit<CardEnv, 'id'>) => void; // o id vem do back
   columns: ColumnEnv[];
   prioritys: PriorityEnv[];
   users: userEnv[];
@@ -22,11 +26,13 @@ type Props = {
 function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: Props) {
   const [label, setLabel] = useState('');
   const [description, setDescription] = useState('');
-  const [column, setColumn] = useState('');
+  const [column, setColumn] = useState<ColumnEnv['id'] | ''>('');
   const [priority, setPriority] = useState<number | ''>('');
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0); // 0 a 100, igual ao EditCardForm e ao KanbanCardContent
   const [date, setDate] = useState<Date | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+
+  const noColumns = columns.length === 0;
 
   const reset = () => {
     setLabel(''); setDescription(''); setColumn('');
@@ -35,30 +41,35 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!label.trim() || !column) return;
+    if (!label.trim() || column === '') return;
 
     onSubmit({
-        id: 0,
       label: label.trim(),
       description: description.trim() || undefined,
       column,
       priority: priority === '' ? undefined : priority,
       progress,
-      deadline: date ?? undefined,
+      deadline: date ? startOfDay(date) : undefined,
       users: selectedUsers,
+      archived: false,
     });
-    reset();
     onClose();
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="xs"
+      slotProps={{ transition: { onExited: reset } }} // limpa os campos ao fechar (enviar ou cancelar)
+    >
       <form onSubmit={handleSubmit}>
         <DialogTitle>Novo Card</DialogTitle>
 
         <DialogContent>
           <TextField
-            autoFocus label="Título" value={label}
+            autoFocus required label="Título" value={label}
             onChange={e => setLabel(e.target.value)}
             fullWidth margin="dense"
           />
@@ -69,15 +80,25 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
             fullWidth margin="dense" multiline minRows={2}
           />
 
-          <TextField select label="Coluna" value={column}
-            onChange={e => setColumn(String(e.target.value))} fullWidth margin="dense">
+          <TextField
+            select required label="Coluna" value={column}
+            onChange={e => setColumn(Number(e.target.value))}
+            disabled={noColumns}
+            helperText={noColumns ? 'Crie uma coluna antes de criar cards' : undefined}
+            fullWidth margin="dense"
+          >
             {columns.map(col => (
               <MenuItem key={col.id} value={col.id}>{col.label}</MenuItem>
             ))}
           </TextField>
 
-          <TextField select label="Prioridade" value={priority}
-            onChange={e => setPriority(Number(e.target.value))} fullWidth margin="dense">
+          <TextField
+            select label="Prioridade" value={priority}
+            onChange={e => setPriority(e.target.value === '' ? '' : Number(e.target.value))}
+            slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
+            fullWidth margin="dense"
+          >
+            <MenuItem value="">Nenhuma</MenuItem>
             {prioritys.map(pri => (
               <MenuItem key={pri.id} value={pri.id}>{pri.label}</MenuItem>
             ))}
@@ -85,9 +106,22 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
 
           <TextField
             select label="Usuários" value={selectedUsers}
-            onChange={e => setSelectedUsers(e.target.value as unknown as number[])}
-            slotProps={{ select: { multiple: true } }}
-            fullWidth margin="dense">
+            onChange={e => {
+              const v = e.target.value as unknown;
+              setSelectedUsers(typeof v === 'string' ? v.split(',').map(Number) : (v as number[]));
+            }}
+            slotProps={{
+              select: {
+                multiple: true,
+                renderValue: selected =>
+                  users
+                    .filter(u => (selected as number[]).includes(u.id))
+                    .map(u => u.label)
+                    .join(', '),
+              },
+            }}
+            fullWidth margin="dense"
+          >
             {users.map(u => (
               <MenuItem key={u.id} value={u.id}>{u.label}</MenuItem>
             ))}
@@ -97,19 +131,28 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
           <Slider
             value={progress}
             onChange={(_, v) => setProgress(v as number)}
-            min={0} max={1} step={0.01}
+            min={0} max={100} step={1}
             valueLabelDisplay="auto"
-            valueLabelFormat={v => `${Math.round(v * 100)}%`}
+            valueLabelFormat={v => `${v}%`}
           />
 
+          {/* se o LocalizationProvider já estiver na raiz do app, este aqui pode sair */}
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-            <DateCalendar value={date} onChange={v => setDate(v)} />
+            <DatePicker
+              label="Prazo"
+              value={date}
+              onChange={v => setDate(v)}
+              slotProps={{
+                textField: { fullWidth: true, margin: 'dense' },
+                field: { clearable: true },
+              }}
+            />
           </LocalizationProvider>
         </DialogContent>
 
         <DialogActions>
           <Button onClick={onClose}>Cancelar</Button>
-          <Button type="submit" variant="contained">Criar</Button>
+          <Button type="submit" variant="contained" disabled={noColumns}>Criar</Button>
         </DialogActions>
       </form>
     </Dialog>
