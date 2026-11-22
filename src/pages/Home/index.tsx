@@ -24,8 +24,8 @@ import {
   deleteWorkspace,
   listWorkspaces,
   updateWorkspace,
-} from '../../services/WorkspaceService'
-import type { UpdateWorkspaceType, Workspace } from '../../types/workspace'
+} from '../../services/REMOVERWorkspaceService'
+import type { UpdateWorkspaceType, Workspace } from '../../types/REMOVERworkspace'
 
 function Home() {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([])

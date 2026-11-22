@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/DeleteOutlineOutlined';
 // ajuste o caminho conforme a pasta onde o componente ficar
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "/home/leviatan/Documents/Workspace/Projetos_Faculdade/kanban_front2/mykanban/src/types/environment"
+import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "../../../../types/REMOVERenvironment"
 
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
 

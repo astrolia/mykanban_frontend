@@ -1,6 +1,6 @@
 import api from "./api";
 import type { ColumnEnv } from "../types/ColumnsType";
-import type { ColumnCreateType } from "../types/environment";
+import type { ColumnCreateType } from "../types/REMOVERenvironment";
 
 export const ColumnCRUD = {
   list: (envId: number) =>

@@ -12,7 +12,7 @@ import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrashOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 // ajuste o caminho conforme a pasta onde o componente ficar
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "/home/leviatan/Documents/Workspace/Projetos_Faculdade/kanban_front2/mykanban/src/types/environment"
+import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "../../../../types/REMOVERenvironment"
 
 import './priorities.css'; // classes das cores de prioridade (ajuste o caminho)
 

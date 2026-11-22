@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Stack, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
-import type { Workspace, UpdateWorkspaceType } from '../../../../types/workspace' // ajuste o caminho
+import type { Workspace, UpdateWorkspaceType } from '../../../../types/REMOVERworkspace' // ajuste o caminho
 
 interface EditEnvFormProps {
   workspace: Workspace

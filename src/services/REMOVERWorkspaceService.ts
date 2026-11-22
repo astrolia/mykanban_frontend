@@ -4,7 +4,7 @@ import type {
   Task,
   UpdateWorkspaceType,
   Workspace,
-} from '../types/workspace'
+} from '../types/REMOVERworkspace'
 
 function defaultColumns(): Column[] {
   return [

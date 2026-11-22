@@ -1,4 +1,4 @@
-import type { EnvironmentType, ColumnEnv, ColumnCreateType } from '../types/environment'
+import type { EnvironmentType, ColumnEnv, ColumnCreateType } from '../types/REMOVERenvironment'
 import api from './api'
 
 

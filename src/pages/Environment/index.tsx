@@ -102,7 +102,7 @@ function KanbanEnvironment() {
 
     async function load() {
       try {
-        const response = emptyEnvObject//await loadEnvironment(Number(envId))
+        const response = await loadEnvironment(Number(envId))
         setEnvObject(organizeEnv(response))
       } catch (e) {
         toast.error(msgErro(e))
