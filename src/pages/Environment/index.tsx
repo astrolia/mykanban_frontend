@@ -115,9 +115,9 @@ function KanbanEnvironment() {
       return
     }
 
-    const hasCards = [...envObject.cards, ...envObject.archive].some(c => c.column === deletedColumn.id)
+    const hasCards = [...envObject.cards].some(c => c.column === deletedColumn.id)
     if (hasCards) {
-      toast.error('Essa coluna ainda tem cards (inclusive arquivados)')
+      toast.error('Essa coluna ainda tem cards')
       return
     }
 
