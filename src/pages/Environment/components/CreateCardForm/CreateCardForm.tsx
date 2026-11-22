@@ -8,7 +8,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ptBR } from 'date-fns/locale';
 import { startOfDay } from 'date-fns';
-// src/pages/Environment/components/CreateCardForm/ -> src/types/
 import type { CardEnv } from '../../../../types/CardsType';
 import type { ColumnEnv } from '../../../../types/ColumnsType';
 import type { PriorityEnv } from '../../../../types/PriorityType';
@@ -17,7 +16,7 @@ import type { userEnv } from '../../../../types/UserType';
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSubmit: (card: Omit<CardEnv, 'id'>) => void; // o id vem do back
+  onSubmit: (card: Omit<CardEnv, 'id'>) => void;
   columns: ColumnEnv[];
   prioritys: PriorityEnv[];
   users: userEnv[];
@@ -28,7 +27,7 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
   const [description, setDescription] = useState('');
   const [column, setColumn] = useState<ColumnEnv['id'] | ''>('');
   const [priority, setPriority] = useState<number | ''>('');
-  const [progress, setProgress] = useState(0); // 0 a 100, igual ao EditCardForm e ao KanbanCardContent
+  const [progress, setProgress] = useState(0);
   const [date, setDate] = useState<Date | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
@@ -62,7 +61,7 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
       onClose={onClose}
       fullWidth
       maxWidth="xs"
-      slotProps={{ transition: { onExited: reset } }} // limpa os campos ao fechar (enviar ou cancelar)
+      slotProps={{ transition: { onExited: reset } }}
     >
       <form onSubmit={handleSubmit}>
         <DialogTitle>Novo Card</DialogTitle>
@@ -136,7 +135,6 @@ function CreateCardForm({ open, onClose, onSubmit, columns, prioritys, users }: 
             valueLabelFormat={v => `${v}%`}
           />
 
-          {/* se o LocalizationProvider já estiver na raiz do app, este aqui pode sair */}
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
             <DatePicker
               label="Prazo"

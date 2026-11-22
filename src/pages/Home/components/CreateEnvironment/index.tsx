@@ -1,13 +1,9 @@
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
-
-export interface CreateEnvData {
-  name: string;
-  description: string;
-}
+import type { CreateEnvironmentType } from "../../../../types/EnvironmentType";
 
 interface CreateEnvFormProps {
-  onSubmit: (dados: CreateEnvData) => void;
+  onSubmit: (dados: CreateEnvironmentType) => void;
 }
 
 function CreateEnvForm({ onSubmit }: CreateEnvFormProps) {

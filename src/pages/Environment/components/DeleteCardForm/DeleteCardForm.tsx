@@ -3,7 +3,6 @@ import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Checkbox,
   Typography
 } from '@mui/material';
-// ajuste o caminho conforme a pasta onde o componente ficar
 import type { CardEnv } from '../../../../types/CardsType'
 import { useState } from 'react';
 
@@ -18,16 +17,20 @@ function DeleteCardForm({ open, card, onClose, onConfirm }: Props) {
 
   const [done, setDone] = useState(false)
 
+  const handleClose = () => {
+    setDone(false)
+    onClose()
+  }
+
   const handleConfirm = () => {
     if (!card) return;
 
-    card.done = done
-    onConfirm(card);
-    onClose();
+    onConfirm({ ...card, done });
+    handleClose();
   };
  
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
       <DialogTitle>Arquivar card</DialogTitle>
  
       <DialogContent>
@@ -42,7 +45,7 @@ function DeleteCardForm({ open, card, onClose, onConfirm }: Props) {
       </DialogContent>
  
       <DialogActions>
-        <Button onClick={onClose}>Cancelar</Button>
+        <Button onClick={handleClose}>Cancelar</Button>
         <Button onClick={handleConfirm} color="error" variant="contained" autoFocus>
           Excluir card
         </Button>

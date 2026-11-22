@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField,
 } from '@mui/material';
-// src/pages/Environment/components/DeleteColumnForm/ -> src/types/
 import type { ColumnEnv } from '../../../../types/ColumnsType';
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
   onClose: () => void;
   onSubmit: (columnId: ColumnEnv['id']) => void;
   columns: ColumnEnv[];
-  columnsWithCards?: ColumnEnv['id'][]; // colunas que ainda têm cards (inclusive arquivados)
+  columnsWithCards?: ColumnEnv['id'][];
 };
 
 function DeleteColumnForm({ open, onClose, onSubmit, columns, columnsWithCards = [] }: Props) {
@@ -30,7 +29,7 @@ function DeleteColumnForm({ open, onClose, onSubmit, columns, columnsWithCards =
       onClose={onClose}
       fullWidth
       maxWidth="xs"
-      slotProps={{ transition: { onExited: () => setColumnId('') } }} // limpa ao fechar
+      slotProps={{ transition: { onExited: () => setColumnId('') } }}
     >
       <form onSubmit={handleSubmit}>
         <DialogTitle>Deletar Coluna</DialogTitle>

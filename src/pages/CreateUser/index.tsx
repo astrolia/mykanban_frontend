@@ -12,6 +12,10 @@ import {
 
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import toast from 'react-hot-toast'
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MIN_PASSWORD_LENGTH = 6
 
 function CreateUser() {
   const [name, setName] = useState('')
@@ -19,12 +23,24 @@ function CreateUser() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
+  const emailInvalid = email.trim().length > 0 && !EMAIL_REGEX.test(email.trim())
+  const passwordInvalid = password.length > 0 && password.length < MIN_PASSWORD_LENGTH
 
   async function sendUser(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
+    if (!EMAIL_REGEX.test(email.trim())) {
+      toast.error('Digite um e-mail válido.')
+      return
+    }
+
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      toast.error(`A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`)
+      return
+    }
+
     if (password !== confirmPassword) {
-      alert('Senha divergente!')
+      toast.error('Senha divergente!')
       return
     }
 
@@ -39,10 +55,10 @@ function CreateUser() {
       setPassword('')
       setConfirmPassword('')
 
-      alert('Cadastro realizado!')
+      toast.success('Cadastro realizado!')
       navigate('/login')
     } catch (error) {
-      alert('Erro ao realizar o cadastro.')
+      toast.error('Erro ao realizar o cadastro.')
     }
   }
 
@@ -79,6 +95,8 @@ function CreateUser() {
                 name='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={emailInvalid}
+                helperText={emailInvalid ? 'Digite um e-mail válido' : ' '}
                 fullWidth
                 required
               />
@@ -89,6 +107,13 @@ function CreateUser() {
                 name='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={passwordInvalid}
+                helperText={
+                  passwordInvalid
+                    ? `A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres`
+                    : `Use pelo menos ${MIN_PASSWORD_LENGTH} caracteres`
+                }
+                slotProps={{ htmlInput: { minLength: MIN_PASSWORD_LENGTH } }}
                 fullWidth
                 required
               />
@@ -99,6 +124,7 @@ function CreateUser() {
                 name='confirmPassword'
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                slotProps={{ htmlInput: { minLength: MIN_PASSWORD_LENGTH } }}
                 fullWidth
                 required
               />

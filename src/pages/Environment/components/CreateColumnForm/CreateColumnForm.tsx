@@ -5,7 +5,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onSubmit: (label: string) => void;
-  existingLabels?: string[]; // nomes das colunas atuais, para barrar repetidos
+  existingLabels?: string[];
 };
 
 function CreateColumnForm({ open, onClose, onSubmit, existingLabels = [] }: Props) {
@@ -28,7 +28,7 @@ function CreateColumnForm({ open, onClose, onSubmit, existingLabels = [] }: Prop
       onClose={onClose}
       fullWidth
       maxWidth="xs"
-      slotProps={{ transition: { onExited: () => setLabel('') } }} // limpa ao fechar (enviar ou cancelar)
+      slotProps={{ transition: { onExited: () => setLabel('') } }}
     >
       <form onSubmit={handleSubmit}>
         <DialogTitle>Nova Coluna</DialogTitle>

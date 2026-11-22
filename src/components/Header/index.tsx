@@ -34,7 +34,6 @@ function Header() {
       return <NavLink to="/login">Login</NavLink>
     }
 
-    // demais páginas: usuário logado
     return (
       <>
         <NavLink to={'/home'}>Home</NavLink>

@@ -1,4 +1,3 @@
-import './styles.css'
 import { login } from '../../services/AuthService'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -14,6 +13,8 @@ import {
 
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import toast from 'react-hot-toast'
+import { msgErro } from '../../utils/erro'
 
 function LoginUser() {
   const [email, setEmail] = useState('')
@@ -28,7 +29,7 @@ async function loginUser(e: FormEvent<HTMLFormElement>) {
     navigate('/home')
   } catch (error) {
     setPassword('')
-    alert('Email ou senha inválidos')
+    toast.error(msgErro(error))
   }
 }
 

@@ -1,4 +1,3 @@
-// src/utils/erro.ts
 import axios from "axios";
 
 export function msgErro(error: unknown): string {

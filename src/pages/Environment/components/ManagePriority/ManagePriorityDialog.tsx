@@ -5,13 +5,11 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlineOutlined';
-// src/pages/Environment/components/ManagePriority/ -> src/types/
 import type { CardEnv } from '../../../../types/CardsType';
 import type { PriorityEnv } from '../../../../types/PriorityType';
 
 import './priorities.css';
 
-// Classes definidas em priorities.css
 const PALETTE = [
   { css: 'priority-red', name: 'Vermelho' },
   { css: 'priority-orange', name: 'Laranja' },
@@ -26,7 +24,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   priorities: PriorityEnv[];
-  cards: CardEnv[]; // usado só para contar quantos cards usam cada prioridade
+  cards: CardEnv[];
   onCreate: (priority: Omit<PriorityEnv, 'id'>) => void;
   onEdit: (priority: PriorityEnv) => void;
   onDelete: (priority: PriorityEnv) => void;
@@ -89,7 +87,6 @@ function ManagePrioritiesDialog({
       <DialogTitle>Prioridades</DialogTitle>
 
       <DialogContent>
-        {/* lista */}
         {priorities.length === 0 && (
           <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
             Nenhuma prioridade criada ainda.
@@ -159,7 +156,6 @@ function ManagePrioritiesDialog({
 
         <Divider sx={{ my: 2 }} />
 
-        {/* formulário de criar / editar */}
         <form onSubmit={handleSubmit}>
           <Typography variant="subtitle2">
             {editing ? 'Editar prioridade' : 'Nova prioridade'}

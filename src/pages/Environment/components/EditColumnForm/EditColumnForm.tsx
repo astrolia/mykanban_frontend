@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField,
 } from '@mui/material';
-// src/pages/Environment/components/EditColumnForm/ -> src/types/
 import type { ColumnEnv } from '../../../../types/ColumnsType';
 
 type Props = {
@@ -30,7 +29,6 @@ function EditColumnForm({ open, onClose, onSubmit, columns }: Props) {
     setNewLabel('');
   };
 
-  // ao escolher a coluna, o novo nome já vem preenchido com o nome atual
   const handleSelect = (id: ColumnEnv['id']) => {
     setColumnId(id);
     setNewLabel(columns.find(c => c.id === id)?.label ?? '');
@@ -50,7 +48,7 @@ function EditColumnForm({ open, onClose, onSubmit, columns }: Props) {
       onClose={onClose}
       fullWidth
       maxWidth="xs"
-      slotProps={{ transition: { onExited: reset } }} // limpa ao fechar (confirmar ou cancelar)
+      slotProps={{ transition: { onExited: reset } }}
     >
       <form onSubmit={handleSubmit}>
         <DialogTitle>Editar Coluna</DialogTitle>

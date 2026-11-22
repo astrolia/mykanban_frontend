@@ -13,6 +13,6 @@ export type CardEnv = {
 }
 
 export type CardMoveType = {
-  column?: CardEnv["column"];     // coluna de destino; omitida se só reordenou dentro da mesma coluna
-  before?: CardEnv["id"] | null;  // id do card que fica logo depois; null (ou omitido) = fim da coluna
+  column?: CardEnv["column"];
+  before?: CardEnv["id"] | null;
 };

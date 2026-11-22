@@ -9,7 +9,7 @@ export const CardCRUD = {
     api.get<CardEnv>(`/cards/${id}`).then((r) => r.data),
 
   create: (envId: number, data: Partial<CardEnv>) =>
-    api.post<CardEnv>(`/environments/${envId}/cards`, { data }).then((r) => r.data),
+    api.post<CardEnv>(`/environments/${envId}/cards`, data).then((r) => r.data),
 
   edit: (id: number, data: Partial<CardEnv>) =>
     api.put<CardEnv>(`/cards/${id}`, data).then((r) => r.data),

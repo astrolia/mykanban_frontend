@@ -5,18 +5,20 @@ import {
 } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import type { GridColDef } from '@mui/x-data-grid';
-import { ptBR } from '@mui/x-data-grid/locales'; // exige @mui/x-data-grid v6 ou superior
+import { ptBR } from '@mui/x-data-grid/locales';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrashOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForeverOutlined';
 
-// ajuste o caminho conforme a pasta onde o componente ficar
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "../../../../types/REMOVERenvironment"
+import type { CardEnv } from "../../../../types/CardsType"
+import type { ColumnEnv } from "../../../../types/ColumnsType"
+import type { PriorityEnv } from "../../../../types/PriorityType"
+import type { userEnv } from "../../../../types/UserType"
 
-import './priorities.css'; // classes das cores de prioridade (ajuste o caminho)
+import '../ManagePriority/priorities.css';
+import './priorities.css';
 
-// Mesma constante do KanbanCardContent (100 se o progresso for 0-100, 1 se for 0-1)
 const PROGRESS_MAX = 100;
 
 type Props = {
@@ -178,7 +180,6 @@ function ArchiveDialog({
         />,
       ],
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   ], [expanded, columns, priorities, users, noColumns, onRestore]);
 
   return (
@@ -217,7 +218,6 @@ function ArchiveDialog({
         </DialogActions>
       </Dialog>
 
-      {/* confirmação de exclusão definitiva */}
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)} fullWidth maxWidth="xs">
         <DialogTitle>Excluir definitivamente</DialogTitle>
         <DialogContent>

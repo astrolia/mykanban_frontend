@@ -5,12 +5,10 @@ import {
 import EditIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { parseISO } from 'date-fns';
-// src/pages/Environment/components/KanbanCardContent/ -> src/types/
 import type { CardEnv } from '../../../../types/CardsType';
 import type { PriorityEnv } from '../../../../types/PriorityType';
 import type { userEnv } from '../../../../types/UserType';
 
-// Escala do progresso: mesma do CreateCardForm e do EditCardForm (0 a 100)
 const PROGRESS_MAX = 100;
 
 type Props = {
@@ -21,12 +19,8 @@ type Props = {
   onDelete: (card: CardEnv) => void;
 };
 
-// Impede que o clique/arraste nos botões chegue ao card (seleção e drag-and-drop)
 const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
-// O deadline pode chegar do back como string ("2026-11-21" ou ISO completo).
-// parseISO lê "2026-11-21" como data local; new Date("2026-11-21") leria como UTC
-// e mostraria o dia anterior no Brasil.
 const formatDeadline = (value: Date | string): string => {
   const date = typeof value === 'string' ? parseISO(value) : value;
   return date.toLocaleDateString('pt-BR');
@@ -39,9 +33,7 @@ function KanbanCardContent({ card, priorities, users, onEdit, onDelete }: Props)
 
   return (
     <Box sx={{ p: 1.5, display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
-      {/* título + ações */}
       <Stack direction="row" sx={{ alignItems: 'flex-start', gap: 1 }}>
-        {/* flex:1 + minWidth:0 faz o título ocupar o espaço e quebrar linha, empurrando os botões para a direita */}
         <Typography variant="subtitle2" sx={{ flex: 1, minWidth: 0, wordBreak: 'break-word' }}>
           {card.label}
         </Typography>

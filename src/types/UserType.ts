@@ -5,6 +5,7 @@ export interface createUserType{
 }
 
 export type UserResponseType = {
+  id: number
   name: string
   email: string
 }

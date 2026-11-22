@@ -4,6 +4,7 @@ import type {
   UpdateUserType,
   ChangePasswordType,
 } from '../types/UserType'
+import type {UserEnvironmentsType} from '../types/EnvironmentType'
 import api from './api'
 import type { userEnv } from '../types/UserType';
 
@@ -37,16 +38,12 @@ export async function deleteMe(password: string) {
   localStorage.removeItem('token')
 }
 
-
 export async function findByEmail(email: string): Promise<userEnv> {
-
-    try{
-      const response = await api.get<userEnv>('/users/by-email', { params: { email } });
-      return response.data;
-
-    }catch(e){
-      throw new Error("Falha ao retornar ambiente");
-
-    }
+    const response = await api.get<userEnv>('/users/by-email', { params: { email } });
+    return response.data;
 }
 
+export async function listUserEnvironments(userId: number): Promise<UserEnvironmentsType[]>{
+  const response = await api.get<UserEnvironmentsType[]>(`/users/${userId}/environments`)
+  return response.data
+}

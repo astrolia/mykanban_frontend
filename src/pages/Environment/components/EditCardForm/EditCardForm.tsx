@@ -5,15 +5,11 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { parseISO, startOfDay } from 'date-fns';
-// src/pages/Environment/components/EditCardForm/ -> src/types/
 import type { CardEnv } from '../../../../types/CardsType';
 import type { ColumnEnv } from '../../../../types/ColumnsType';
 import type { PriorityEnv } from '../../../../types/PriorityType';
 import type { userEnv } from '../../../../types/UserType';
 
-// O deadline pode chegar do back como string ("2026-11-21" ou ISO completo).
-// parseISO lê "2026-11-21" como data local; new Date("2026-11-21") leria como UTC
-// e mostraria o dia anterior no Brasil.
 const toDate = (value?: Date | string | null): Date | null => {
   if (!value) return null;
   return typeof value === 'string' ? parseISO(value) : value;
@@ -31,17 +27,12 @@ type Props = {
 
 type ContentProps = Omit<Props, 'open' | 'card'> & { card: CardEnv };
 
-/**
- * O conteúdo fica num componente separado, montado só quando o diálogo está aberto.
- * Assim o estado é inicializado a partir do card toda vez que o diálogo abre,
- * sem precisar de useEffect nem de reset ao cancelar.
- */
 function EditCardFormContent({ card, columns, priorities, users, onClose, onSubmit }: ContentProps) {
   const [label, setLabel] = useState(card.label);
   const [description, setDescription] = useState(card.description ?? '');
   const [column, setColumn] = useState<ColumnEnv['id'] | ''>(card.column);
   const [priority, setPriority] = useState<number | ''>(card.priority ?? '');
-  const [progress, setProgress] = useState(card.progress ?? 0); // 0 a 100
+  const [progress, setProgress] = useState(card.progress ?? 0);
   const [date, setDate] = useState<Date | null>(toDate(card.deadline));
   const [selectedUsers, setSelectedUsers] = useState<number[]>(card.users ?? []);
 
@@ -50,7 +41,7 @@ function EditCardFormContent({ card, columns, priorities, users, onClose, onSubm
     if (!label.trim() || column === '') return;
 
     onSubmit({
-      ...card, // mantém o id e qualquer outro campo que o formulário não edita
+      ...card,
       label: label.trim(),
       description: description.trim() || undefined,
       column,
@@ -133,7 +124,6 @@ function EditCardFormContent({ card, columns, priorities, users, onClose, onSubm
           valueLabelFormat={v => `${v}%`}
         />
 
-        {/* requer LocalizationProvider (AdapterDateFns, ptBR) na raiz do app */}
         <DatePicker
           label="Prazo"
           value={date}

@@ -4,8 +4,8 @@ import {
   Divider, IconButton, Stack, TextField, Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/DeleteOutlineOutlined';
-// ajuste o caminho conforme a pasta onde o componente ficar
-import type {CardEnv, ColumnEnv, PriorityEnv, userEnv} from "../../../../types/REMOVERenvironment"
+import type { CardEnv } from "../../../../types/CardsType"
+import type { userEnv } from "../../../../types/UserType"
 
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
 
@@ -13,8 +13,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   users: userEnv[];
-  cards: CardEnv[]; // usado só para contar em quantos cards cada usuário está
-  // deve lançar um Error com a mensagem a exibir se não conseguir adicionar
+  cards: CardEnv[];
   onAdd: (email: string) => Promise<void>;
   onRemove: (user: userEnv) => void | Promise<void>;
 };
@@ -76,7 +75,6 @@ function ManageUsersDialog({ open, onClose, users, cards, onAdd, onRemove }: Pro
       <DialogTitle>Usuários do ambiente</DialogTitle>
 
       <DialogContent>
-        {/* lista */}
         {users.length === 0 && (
           <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
             Nenhum usuário neste ambiente.
@@ -143,7 +141,6 @@ function ManageUsersDialog({ open, onClose, users, cards, onAdd, onRemove }: Pro
 
         <Divider sx={{ my: 2 }} />
 
-        {/* adicionar por e-mail */}
         <form onSubmit={handleSubmit}>
           <Typography variant="subtitle2">Adicionar usuário</Typography>
 
