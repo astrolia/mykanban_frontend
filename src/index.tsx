@@ -4,11 +4,11 @@ import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import './index.css'
-import Home from './pages/Home/index'
-import Login from './pages/Login'
-import CreateUser from './pages/CreateUser'
-import KanbanEnvironment from './pages/Environment'
-import UserSettings from './pages/UserSettings'
+import Home from './pages/Home/Home'
+import Login from './pages/Login/Login'
+import CreateUser from './pages/CreateUser/CreateUser'
+import KanbanEnvironment from './pages/Environment/Environment'
+import UserSettings from './pages/UserSettings/UserSettings'
 import Layout from './components/Layout'
 import PrivateRoute from './components/PrivateRoute'
 import { CssBaseline } from '@mui/material'
@@ -72,11 +72,6 @@ createRoot(document.getElementById('root')!).render(
             <Route element={<Layout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<CreateUser />} />
-
-              {import.meta.env.DEV && (
-                <Route path="/preview/environment" element={<KanbanEnvironment />} />
-              )}
-
               <Route element={<PrivateRoute><Outlet /></PrivateRoute>}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/environment/:envId" element={<KanbanEnvironment />} />
