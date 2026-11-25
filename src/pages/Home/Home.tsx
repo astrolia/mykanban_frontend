@@ -167,13 +167,6 @@ function Home() {
                         >
                           Arquivar
                         </Button>
-                        <Button
-                          size='small'
-                          color='error'
-                          onClick={() => setDeleting(environment)}
-                        >
-                          Excluir
-                        </Button>
                       </>
                     )}
                   </CardActions>
