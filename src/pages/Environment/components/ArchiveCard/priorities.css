@@ -1,0 +1,13 @@
+.MuiDataGrid-row.row-done {
+  background-color: rgba(76, 175, 80, 0.12) !important;
+}
+.MuiDataGrid-row.row-done:hover {
+  background-color: rgba(76, 175, 80, 0.2) !important;
+}
+
+.MuiDataGrid-row.row-not-done {
+  background-color: rgba(244, 67, 54, 0.12) !important;
+}
+.MuiDataGrid-row.row-not-done:hover {
+  background-color: rgba(244, 67, 54, 0.2) !important;
+}
